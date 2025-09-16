@@ -1,7 +1,4 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: Build and deploy ASP.Net Core app to Azure Web App - smartschool-webapp
+name: Build and Deploy SmartSchool Web App
 
 on:
   push:
@@ -10,11 +7,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  # --- Backend Build Job ---
+  build-backend:
     runs-on: windows-latest
-    permissions:
-      contents: read #This is required for actions/checkout
-
+    outputs:
+      artifact-path: ${{ steps.publish.outputs.artifact-path }}
     steps:
       - uses: actions/checkout@v4
 
@@ -23,31 +20,77 @@ jobs:
         with:
           dotnet-version: '8.x'
 
-      - name: Build with dotnet
+      - name: Build .NET Core App
         run: dotnet build --configuration Release
 
-      - name: dotnet publish
-        run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
+      - name: Publish .NET Core App
+        id: publish
+        run: |
+          dotnet publish -c Release -o "${{ env.DOTNET_ROOT }}/myapp"
+          echo "artifact-path=${{ env.DOTNET_ROOT }}/myapp" >> $GITHUB_OUTPUT
 
-      - name: Upload artifact for deployment job
+      - name: Upload backend artifact
         uses: actions/upload-artifact@v4
         with:
-          name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+          name: backend-artifact
+          path: ${{ env.DOTNET_ROOT }}/myapp
 
+  # --- Frontend Build Job ---
+  build-frontend:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install frontend dependencies
+        run: npm install
+        working-directory: ./frontend
+
+      - name: Build React frontend
+        run: npm run build
+        working-directory: ./frontend
+
+      - name: Upload frontend artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-artifact
+          path: ./frontend/build
+
+  # --- Deployment Job ---
   deploy:
     runs-on: windows-latest
-    needs: build
+    needs:
+      - build-backend
+      - build-frontend
     permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
+      id-token: write
+      contents: read
 
     steps:
-      - name: Download artifact from build job
+      # Download artifacts from both jobs
+      - name: Download backend artifact
         uses: actions/download-artifact@v4
         with:
-          name: .net-app
-      
+          name: backend-artifact
+          path: ./myapp
+
+      - name: Download frontend artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-artifact
+          path: ./frontend/build
+
+      # Merge frontend build into backend wwwroot
+      - name: Copy frontend build into backend wwwroot
+        run: |
+          rm -rf ./myapp/wwwroot
+          cp -r ./frontend/build ./myapp/wwwroot
+
+      # Login to Azure
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -55,11 +98,11 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_A0481AB7D9A345FC8F2D4DE10891FA24 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_5FB000ED737749408289765D217B906A }}
 
+      # Deploy combined app to Azure Web App
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'smartschool-webapp'
           slot-name: 'Production'
-          package: .
-          
+          package: ./myapp
