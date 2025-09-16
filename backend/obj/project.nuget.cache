@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "4iHSHILufsc=",
+  "dgSpecHash": "eqHlNcxpAbY=",
   "success": true,
-  "projectFilePath": "C:\\Users\\relia\\smart-schools\\backend\\backend.csproj",
+  "projectFilePath": "C:\\Users\\relia\\Source\\Repos\\smart-schools\\backend\\backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\relia\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.1\\microsoft.aspnetcore.openapi.9.0.1.nupkg.sha512",
     "C:\\Users\\relia\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
