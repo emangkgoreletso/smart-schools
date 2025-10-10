@@ -1,20 +1,12 @@
 {
   "Version": 1,
-  "Hash": "G+n2qLjene934c6b2vak9Pq2Uw8dylKEU9BtmgNgRQA=",
+  "Hash": "N7qxhc9M+1QNtfzJGqsi8ULkGFultmEzonbEq/EKgV4=",
   "Source": "backend",
   "BasePath": "_content/backend",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [
-    {
-      "Name": "backend\\wwwroot",
-      "Source": "backend",
-      "ContentRoot": "C:\\Users\\relia\\Source\\Repos\\smart-schools\\backend\\wwwroot\\",
-      "BasePath": "_content/backend",
-      "Pattern": "**"
-    }
-  ],
+  "DiscoveryPatterns": [],
   "Assets": [],
   "Endpoints": []
 }
