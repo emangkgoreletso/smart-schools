@@ -1,70 +1,80 @@
-# Getting Started with Create React App
+# 🏫 Smart Schools System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The **Smart Schools System** is a full-stack web application built with **React (TypeScript)** on the frontend and **ASP.NET Core (C#)** on the backend.  
+It is designed to **automate school processes** — from admissions, assignments, tests, and payments to parent and teacher portals — tailored for **individual schools**.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🚀 Features
 
-### `npm start`
+### 👨‍🏫 Core Modules
+- **Authentication & Roles** — Admin, Student, Teacher, Parent
+- **Student Management** — Enrollment, Test Results, Submissions
+- **Teacher Portal** — Assignment creation, grading, and reporting
+- **Parent Portal** — View child progress, fees, and reports
+- **Admissions** — Online applications and student intake
+- **Payments** — Fee tracking, balances, and receipts
+- **Tests & Exams** — Multiple-choice online tests with results
+- **AI Integration (Optional)** — Future support for AI-powered grading or chat assistant
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🧩 Tech Stack
 
-### `npm test`
+### **Frontend**
+- React + TypeScript  
+- Tailwind CSS  
+- Axios (API calls)  
+- React Router DOM  
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### **Backend**
+- ASP.NET Core 9.0  
+- Entity Framework Core  
+- Microsoft SQL Server  
+- JWT Authentication  
+- BCrypt for password hashing  
+- Swagger (API documentation)
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 📁 Project Structure
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+smart-schools/
+│
+├── backend/
+│ ├── Controllers/
+│ ├── Models/
+│ ├── Data/
+│ ├── Services/
+│ ├── Program.cs
+│ ├── appsettings.json
+│ └── backend.csproj
+│
+└── frontend/
+├── src/
+│ ├── components/
+│ ├── pages/
+│ ├── types/
+│ ├── api/
+│ ├── utils/
+│ └── styles/
+├── package.json
+└── tailwind.config.js
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## ⚙️ Setup Guide
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### **Backend Setup**
+```bash
+cd backend
+dotnet restore
+dotnet ef database update
+dotnet run
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+ ### **Frontend Setup**
+cd frontend
+npm install
+npm start
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

@@ -4,6 +4,7 @@ namespace backend.Models
     {
         public int Id { get; set; }
         public int AssignmentId { get; set; }
+         public Assignment? Assignment { get; set; }
         public int StudentId { get; set; }
         public string FilePath { get; set; } = string.Empty;
         public DateTime SubmittedAt { get; set; } = DateTime.UtcNow;
