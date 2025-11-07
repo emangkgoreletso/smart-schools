@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FaUserPlus, FaCheckCircle } from "react-icons/fa";
 
-const Admission: React.FC = () => {
+const Admissions: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -68,4 +68,4 @@ const Admission: React.FC = () => {
   );
 };
 
-export default Admission;
+export default Admissions;

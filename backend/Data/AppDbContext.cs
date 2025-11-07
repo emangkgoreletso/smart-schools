@@ -23,32 +23,33 @@ namespace backend.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // ✅ Student relationships
+            // ✅ Student → Submission (one-to-many)
             modelBuilder.Entity<Student>()
                 .HasMany(s => s.Submissions)
                 .WithOne()
                 .HasForeignKey(s => s.StudentId)
-                .OnDelete(DeleteBehavior.Restrict); // prevent multiple cascade paths
+                .OnDelete(DeleteBehavior.Restrict);
 
+            // ✅ Student → TestResult (one-to-many)
             modelBuilder.Entity<Student>()
                 .HasMany(s => s.TestResults)
                 .WithOne()
                 .HasForeignKey(r => r.StudentId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // ✅ Teacher relationships
+            // ✅ Teacher → Assignment (one-to-many)
             modelBuilder.Entity<Teacher>()
                 .HasMany(t => t.Assignments)
                 .WithOne()
                 .HasForeignKey(a => a.TeacherId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // ✅ Assignment relationships
-            modelBuilder.Entity<Assignment>()
-                .HasMany(a => a.Submissions)
-                .WithOne()
+            // ✅ Assignment → Submission (one-to-many)
+            modelBuilder.Entity<Submission>()
+                .HasOne(s => s.Assignment)
+                .WithMany(a => a.Submissions)
                 .HasForeignKey(s => s.AssignmentId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             // ✅ Test embeds TestQuestion as value object
             modelBuilder.Entity<Test>()
@@ -57,7 +58,7 @@ namespace backend.Data
             // ✅ Payment precision fix
             modelBuilder.Entity<Payment>()
                 .Property(p => p.Amount)
-                .HasPrecision(18, 2); // Avoids truncation warning
+                .HasPrecision(18, 2);
         }
     }
 }

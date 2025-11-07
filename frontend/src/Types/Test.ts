@@ -10,4 +10,17 @@ export interface Test {
   title: string;
   description: string;
   questions: TestQuestion[];
+  
+}
+
+export interface TestResult {
+  id: number;
+  studentId: number;
+  testId: number;
+  score: number;
+  grade: string;
+  feedback?: string;
+  dateTaken: string;
+  testTitle?: string;
+  passed?: boolean;
 }

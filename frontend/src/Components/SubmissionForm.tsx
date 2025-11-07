@@ -12,7 +12,8 @@ const SubmissionForm: React.FC<Props> = ({ editing, onSaved }) => {
   const [studentId, setStudentId] = useState(0);
   const [filePath, setFilePath] = useState("");
   const [status, setStatus] = useState("Pending");
-  const [grade, setGrade] = useState<number | undefined>(undefined);
+  //const [grade, setGrade] = useState<number | undefined>(undefined);
+  const [grade, setGrade] = useState<number | undefined | string>(undefined);
 
   useEffect(() => {
     if (editing) {

@@ -1,20 +1,39 @@
+
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
 import App from "./App";
+import "./index.css";
+import GlobalErrorBoundary from "./Components/ErrorBoundary";
 
-console.log("✅ index.tsx loaded");
+const root = ReactDOM.createRoot(document.getElementById("root")!);
 
-const rootElement = document.getElementById("root");
-console.log("Root element found:", rootElement);
+class ErrorBoundary extends React.Component<{ children: React.ReactNode }, { error: any }> {
+  constructor(props: any) {
+    super(props);
+    this.state = { error: null };
+  }
 
-if (rootElement) {
-  const root = ReactDOM.createRoot(rootElement);
-  root.render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  );
-} else {
-  console.error("❌ No root element found in index.html");
+  static getDerivedStateFromError(error: any) {
+    return { error };
+  }
+
+  render() {
+    if (this.state.error) {
+      return (
+        <div style={{ padding: 20, color: "red" }}>
+          <h2>⚠️ App crashed:</h2>
+          <pre>{this.state.error.message}</pre>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
 }
+
+root.render(
+  <React.StrictMode>
+    <GlobalErrorBoundary>
+      <App />
+    </GlobalErrorBoundary>
+  </React.StrictMode>
+);

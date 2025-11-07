@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { TestResult } from "../types/Test";
-import { getTestResults } from "../api/tests"; // adjust based on your API structure
+import { TestResult } from "../Types/Test";
+import { getTestResults } from "../Api/Api"; // adjust based on your API structure
 import { Trophy, XCircle, CheckCircle, Loader2 } from "lucide-react";
 
 const TestResults: React.FC<{ studentId: number }> = ({ studentId }) => {

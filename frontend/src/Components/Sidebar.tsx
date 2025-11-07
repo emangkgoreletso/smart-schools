@@ -11,7 +11,8 @@ import {
   GraduationCap,
   ClipboardList,
 } from "lucide-react";
-import { getUserRole, logout } from "../Utils/auth";
+import { getUserRole, logout } from "../Utils/Auth";
+import { JSX } from "react/jsx-runtime";
 
 const Sidebar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);

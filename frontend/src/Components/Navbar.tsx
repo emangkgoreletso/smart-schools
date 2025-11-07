@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { isAuthenticated, getUserRole, logout } from "../utils/auth";
+import { isAuthenticated, getUserRole, logout } from "../Utils/Auth";
 
 const NavBar: React.FC = () => {
   const navigate = useNavigate();

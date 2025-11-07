@@ -7,11 +7,11 @@ import ParentsPortal from "./Pages/ParentsPortal";
 import LoginPage from "./Pages/LoginPage";
 import Register from "./Pages/Register";
 import Dashboard from "./Pages/Dashboard";
-import Payments from "./pages/Payments";
-import Admission from "./Pages/Admissions";
+import Payments from "./Pages/Payments";
+import Admissions from "./Pages/Admissions";
 import Reports from "./Pages/Reports";
 import Assignments from "./Pages/Assignments";
-import SubmissionsPage from "./Pages/SubmissionsPage";
+import Submissions from "./Pages/SubmissionsPage";
 import TestsPage from "./Pages/TestsPage";
 
 
@@ -19,6 +19,7 @@ const App: React.FC = () => {
   return (
         
     <Router>
+      <React.Suspense fallback={<div style={{ textAlign: "center", marginTop: "40px" }}>Loading...</div>}>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/homepage" element={<HomePage />} />
@@ -29,12 +30,13 @@ const App: React.FC = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/payments" element={<Payments />} />
-        <Route path="/admissions" element={<Admission />} />
+        <Route path="/admissions" element={<Admissions />} />
         <Route path="/reports" element={<Reports />} />
         <Route path="/assignments" element={<Assignments />} />
-        <Route path="/submissions" element={<SubmissionsPage />} />
+        <Route path="/submissions" element={<Submissions />} />
         <Route path="/tests" element={<TestsPage />} />
       </Routes>
+      </React.Suspense>
     </Router>
   );
 };

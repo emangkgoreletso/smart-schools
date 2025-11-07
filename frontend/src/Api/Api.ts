@@ -140,3 +140,6 @@ export const getReports = async () => {
   const res = await api.get("/reports");
   return res.data;
 };
+
+// ✅ Export axios instance for direct use if needed
+export default api;

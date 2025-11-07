@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Assignment } from "../Types/Assignment";
-import { createAssignment, updateAssignment } from "../api/api";
+import { createAssignment, updateAssignment } from "../Api/Api";
 
 interface Props {
   editing: Assignment | null;
@@ -8,26 +8,32 @@ interface Props {
 }
 
 const AssignmentForm: React.FC<Props> = ({ editing, onSaved }) => {
-  const [title, setTitle] = useState("");
-  const [courseId, setCourseId] = useState(0);
-  const [filePath, setFilePath] = useState("");
-  const [summary, setSummary] = useState("");
+  const [title, setTitle] = useState<string>("");
+  const [courseId, setCourseId] = useState<number>(0);
+  const [filePath, setFilePath] = useState<string>("");
+  const [summary, setSummary] = useState<string>("");
 
   useEffect(() => {
     if (editing) {
-      setTitle(editing.title);
-      setCourseId(editing.courseId);
-      setFilePath(editing.filePath);
-      setSummary(editing.summary);
+      setTitle(editing.title ?? "");
+      setCourseId(editing.courseId ?? 0);
+      setFilePath(editing.filePath ?? "");
+      setSummary(editing.summary ?? "");
     }
   }, [editing]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const payload = { id: editing?.id ?? 0, title, courseId, filePath, summary };
+    const payload: Assignment = {
+      id: editing?.id ?? 0,
+      title,
+      courseId,
+      filePath,
+      summary,
+    };
 
-    if (editing) {
+    if (editing && editing.id) {
       await updateAssignment(editing.id, payload);
     } else {
       await createAssignment(payload);
