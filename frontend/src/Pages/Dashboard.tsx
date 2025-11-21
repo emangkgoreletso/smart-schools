@@ -11,9 +11,10 @@ const Dashboard: React.FC = () => {
     { label: "Teachers Portal", path: "/teachers" },
     { label: "Parents Portal", path: "/parents" },
     { label: "Payments", path: "/payments" },
-    { label: "finance", path: "/finance" },
-    { label: "admin", path: "/admin" },
-    
+    { label: "Finance", path: "/finance" },
+    { label: "Admin", path: "/admin" },
+    { label: "Super Admin", path: "/super-admin" },
+
   ];
 
   const adminButtons =

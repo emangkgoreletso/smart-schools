@@ -1,108 +1,180 @@
 import React, { useState } from "react";
-import { useAuth } from "../Components/AuthContext";
-import { useNavigate } from "react-router-dom";
 
 const Register: React.FC = () => {
-  const { sendOtp, verifyOtp } = useAuth();
-  const navigate = useNavigate();
-
-  const [step, setStep] = useState<1 | 2>(1);
-
   const [form, setForm] = useState({
+    name: "",
+    surname: "",
+    username: "",
     email: "",
     password: "",
+    confirmPassword: "",
+    role: "",
   });
 
-  const [otp, setOtp] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+    setError("");
   };
 
-  const requestOtp = async () => {
-    try {
-      await sendOtp(form.email);
-      setStep(2);
-    } catch (err) {
-      alert("Failed to send OTP");
+  const validateForm = () => {
+    if (
+      !form.name ||
+      !form.surname ||
+      !form.username ||
+      !form.email ||
+      !form.password ||
+      !form.confirmPassword ||
+      !form.role
+    ) {
+      return "All fields are required.";
     }
+
+    if (form.password !== form.confirmPassword) {
+      return "Passwords do not match.";
+    }
+
+    if (form.password.length < 6) {
+      return "Password must be at least 6 characters.";
+    }
+
+    return null;
   };
 
-  const confirmOtp = async () => {
-    try {
-      await verifyOtp(form.email, otp);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const validationError = validateForm();
 
-      // save temporary user in localStorage (mock register)
-      const newUser = {
-        id: Date.now().toString(),
-        name: form.email.split("@")[0],
-        email: form.email,
-        role: "student",
-        username: form.email,
-      };
-
-      localStorage.setItem("smart_user", JSON.stringify(newUser));
-
-      alert("Registration successful");
-      navigate("/login");
-    } catch (err) {
-      alert("Invalid OTP");
+    if (validationError) {
+      setError(validationError);
+      return;
     }
+
+    // Placeholder success (API later)
+    setSuccess("Account created successfully! A verification email has been sent.");
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
-        <h2 className="text-xl font-bold mb-4">Create Account</h2>
+    <div className="flex justify-center items-center py-12 px-4">
+      <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-lg border border-gray-200">
+        
+        <h2 className="text-2xl font-bold text-maroon-700 text-center mb-6">
+          Create Your Account
+        </h2>
 
-        {step === 1 && (
-          <>
+        {error && <p className="text-red-600 text-center mb-4">{error}</p>}
+        {success && <p className="text-green-600 text-center mb-4">{success}</p>}
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+
+          {/* Name */}
+          <div>
+            <label className="block text-sm font-semibold">Name</label>
+            <input
+              type="text"
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              className="w-full border rounded-lg px-3 py-2"
+              placeholder="Enter your first name"
+            />
+          </div>
+
+          {/* Surname */}
+          <div>
+            <label className="block text-sm font-semibold">Surname</label>
+            <input
+              type="text"
+              name="surname"
+              value={form.surname}
+              onChange={handleChange}
+              className="w-full border rounded-lg px-3 py-2"
+              placeholder="Enter your surname"
+            />
+          </div>
+
+          {/* Username */}
+          <div>
+            <label className="block text-sm font-semibold">Username</label>
+            <input
+              type="text"
+              name="username"
+              value={form.username}
+              onChange={handleChange}
+              className="w-full border rounded-lg px-3 py-2"
+              placeholder="Choose a username"
+            />
+          </div>
+
+          {/* Email */}
+          <div>
+            <label className="block text-sm font-semibold">Email Address</label>
             <input
               type="email"
               name="email"
-              placeholder="Email"
-              className="border p-2 w-full mb-3"
               value={form.email}
               onChange={handleChange}
+              className="w-full border rounded-lg px-3 py-2"
+              placeholder="Enter your email"
             />
+          </div>
+
+          {/* Password */}
+          <div>
+            <label className="block text-sm font-semibold">Password</label>
             <input
               type="password"
               name="password"
-              placeholder="Password"
-              className="border p-2 w-full mb-4"
               value={form.password}
               onChange={handleChange}
+              className="w-full border rounded-lg px-3 py-2"
+              placeholder="Enter password"
             />
+          </div>
 
-            <button
-              onClick={requestOtp}
-              className="w-full bg-maroon-700 text-white py-2 rounded"
-            >
-              Register
-            </button>
-          </>
-        )}
-
-        {step === 2 && (
-          <>
-            <p className="mb-2 text-sm">Enter the OTP sent to your email</p>
-
+          {/* Confirm Password */}
+          <div>
+            <label className="block text-sm font-semibold">Confirm Password</label>
             <input
-              type="text"
-              placeholder="OTP"
-              className="border p-2 w-full mb-4"
-              value={otp}
-              onChange={(e) => setOtp(e.target.value)}
+              type="password"
+              name="confirmPassword"
+              value={form.confirmPassword}
+              onChange={handleChange}
+              className="w-full border rounded-lg px-3 py-2"
+              placeholder="Re-enter password"
             />
+          </div>
 
-            <button
-              onClick={confirmOtp}
-              className="w-full bg-green-600 text-white py-2 rounded"
+          {/* Role Selection */}
+          <div>
+            <label className="block text-sm font-semibold">Select Role</label>
+            <select
+              name="role"
+              value={form.role}
+              onChange={handleChange}
+              className="w-full border rounded-lg px-3 py-2"
             >
-              Verify OTP
-            </button>
-          </>
-        )}
+              <option value="">-- Choose Role --</option>
+              <option value="student">Student</option>
+              <option value="parent">Parent / Guardian</option>
+              <option value="teacher">Teacher</option>
+              <option value="staff">Leadership / HOD / Admin</option>
+            </select>
+          </div>
+
+          {/* Submit */}
+          <button
+            type="submit"
+            className="w-full bg-maroon-700 text-white py-2 rounded-lg hover:bg-maroon-800 transition font-semibold"
+          >
+            Register
+          </button>
+
+        </form>
       </div>
     </div>
   );

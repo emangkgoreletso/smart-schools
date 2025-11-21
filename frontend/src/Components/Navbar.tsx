@@ -26,7 +26,7 @@ const Navbar: React.FC = () => {
 
         <button
           onClick={handleDashboardClick}
-          className="bg-white text-maroon-700 px-4 py-2 rounded-full font-semibold hover:bg-gray-100"
+          className="bg-white text-maroon-700 px-4 py-2 href=./dashboard rounded-full font-semibold hover:bg-gray-100"
         >
           Dashboard
         </button>
