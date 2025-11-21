@@ -1,33 +1,50 @@
+// src/App.tsx
 import React from "react";
-//import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-const Home: React.FC = () => (
-  <div className="p-10 text-center">
-    <h1 className="text-3xl font-bold text-maroon-700">🏫 Smart Schools</h1>
-    <p className="mt-4">Welcome to the rebuilt frontend!</p>
-    <Link
-      to="/about"
-      className="mt-6 inline-block bg-maroon-700 text-white px-4 py-2 rounded-lg"
-    >
-      Go to About
-    </Link>
-  </div>
-);
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-const About: React.FC = () => (
-  <div className="p-10 text-center">
-    <h1 className="text-3xl font-bold">About Page</h1>
-    <p>This is a working route in the new frontend.</p>
-  </div>
-);
+import HomePage from "./Pages/HomePage";
+import AboutPage from "./Pages/About";
+import ContactPage from "./Pages/Contact";
+import Layout from "./Layout/Layout";
 
-const App: React.FC = () => (
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/about" element={<About />} />
-    </Routes>
-  </BrowserRouter>
-);
+import Dashboard from "./Pages/Dashboard";
+import StudentCentre from "./Pages/StudentCentre";
+import TeachersPortal from "./Pages/TeachersPortal";
+import ParentsPortal from "./Pages/ParentsPortal";
+import Payments from "./Pages/Payments";
+import NoticeBoard from "./Components/NoticeBoard";
+
+import { AuthProvider } from "./Components/AuthContext";
+import LoginPage from "./Pages/LoginPage";
+import Register from "./Pages/Register";
+
+const App: React.FC = () => {
+  return (
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+  {/* ------- AUTH PAGES (no layout) ------- */}
+  <Route path="/login" element={<LoginPage />} />
+  <Route path="/register" element={<Register />} />
+
+  {/* ------- PAGES WITH NAVBAR + SIDEBAR ------- */}
+  <Route element={<Layout />}>
+    <Route path="/" element={<HomePage />} />
+    <Route path="/about" element={<AboutPage />} />
+    <Route path="/contact" element={<ContactPage />} />
+
+    <Route path="/dashboard" element={<Dashboard />} />
+    <Route path="/student-centre" element={<StudentCentre />} />
+    <Route path="/teachers-portal" element={<TeachersPortal />} />
+    <Route path="/parents-portal" element={<ParentsPortal />} />
+    <Route path="/payments" element={<Payments />} />
+    <Route path="/notice-board" element={<NoticeBoard />} />
+  </Route>
+</Routes>
+
+      </BrowserRouter>
+    </AuthProvider>
+  );
+};
 
 export default App;
