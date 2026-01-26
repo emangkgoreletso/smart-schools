@@ -1,10 +1,10 @@
 // src/Components/Navbar.tsx
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "../Auth/AuthProvider";
 
 const Navbar: React.FC = () => {
-  const { user, logout } = useAuth();
+  const { user, signOut } = useAuth();
   const navigate = useNavigate();
 
   const handleDashboardClick = () => {
@@ -40,10 +40,18 @@ const Navbar: React.FC = () => {
           </button>
         ) : (
           <button
-            onClick={() => { logout(); navigate("/"); }}
-            className="bg-white text-maroon-700 px-4 py-2 rounded-full font-semibold hover:bg-gray-100"
+            onClick={() => { signOut(); navigate("/"); }}
+            className="flex items-center gap-3 bg-white text-maroon-700 px-4 py-2 rounded-full font-semibold hover:bg-gray-100"
           >
-            Logout ({user.name})
+            {/* Profile Icon */}
+            <span className="w-8 h-8 rounded-full bg-maroon-700 text-white flex items-center justify-center">
+              {user?.firstName?.charAt(0)?.toUpperCase() || "U"}
+            </span>
+
+            {/* Logout Text */}
+            <span>
+              Logout
+            </span>
           </button>
         )}
       </div>

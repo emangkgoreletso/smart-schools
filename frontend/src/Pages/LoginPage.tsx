@@ -1,7 +1,8 @@
 // src/Pages/LoginPage.tsx
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useAuth } from "../Components/AuthContext";
+//import { useAuth } from "../Components/AuthContext";
+import { useAuth } from "../Auth/AuthProvider";
 import MFAModal from "../Components/MFAModal";
 
 const LoginPage: React.FC = () => {

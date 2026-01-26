@@ -14,7 +14,8 @@ import ParentsPortal from "./Pages/ParentsPortal";
 import Payments from "./Pages/Payments";
 import NoticeBoard from "./Components/NoticeBoard";
 
-import { AuthProvider } from "./Components/AuthContext";
+import { AuthProvider } from "./Auth/AuthProvider";
+import { useAuth } from "./Auth/AuthProvider";
 import LoginPage from "./Pages/LoginPage";
 import Register from "./Pages/Register";
 

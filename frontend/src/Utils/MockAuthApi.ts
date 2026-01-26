@@ -116,3 +116,21 @@ export const requestPasswordReset = async (email: string) => {
   console.info(`[DEV] Password reset link for ${email}: /reset-password?email=${encodeURIComponent(email)}&token=${token}`);
   return { ok: true };
 };
+
+// Simulated password reset (mock)
+export const resetPassword = async (
+  token: string,
+  newPassword: string
+): Promise<void> => {
+  console.log("🔐 Reset password with token:", token);
+  console.log("🔑 New password:", newPassword);
+
+  // simulate delay
+  await new Promise((res) => setTimeout(res, 800));
+
+  // In real backend:
+  // - validate token
+  // - hash password
+  // - update DB
+};
+

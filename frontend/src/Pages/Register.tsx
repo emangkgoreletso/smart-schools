@@ -1,6 +1,10 @@
 import React, { useState } from "react";
+import { useAuth } from "../Auth/AuthProvider";
+import { User } from "../Types/User";
 
 const Register: React.FC = () => {
+  const { register } = useAuth();
+
   const [form, setForm] = useState({
     name: "",
     surname: "",
@@ -8,7 +12,7 @@ const Register: React.FC = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    role: "",
+    role: "" as User["role"], // <-- correct type
   });
 
   const [error, setError] = useState("");
@@ -45,7 +49,7 @@ const Register: React.FC = () => {
     return null;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const validationError = validateForm();
 
@@ -54,14 +58,27 @@ const Register: React.FC = () => {
       return;
     }
 
-    // Placeholder success (API later)
-    setSuccess("Account created successfully! A verification email has been sent.");
+    try {
+      await register({
+        username: form.username,
+        email: form.email,
+        password: form.password,
+        role: form.role,
+        firstName: form.name,
+        lastName: form.surname,
+      });
+
+      setSuccess("Account created successfully!");
+      setError("");
+    } catch (err: any) {
+      setError(err.message);
+      setSuccess("");
+    }
   };
 
   return (
     <div className="flex justify-center items-center py-12 px-4">
       <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-lg border border-gray-200">
-        
         <h2 className="text-2xl font-bold text-maroon-700 text-center mb-6">
           Create Your Account
         </h2>
@@ -70,7 +87,6 @@ const Register: React.FC = () => {
         {success && <p className="text-green-600 text-center mb-4">{success}</p>}
 
         <form onSubmit={handleSubmit} className="space-y-4">
-
           {/* Name */}
           <div>
             <label className="block text-sm font-semibold">Name</label>
@@ -173,7 +189,6 @@ const Register: React.FC = () => {
           >
             Register
           </button>
-
         </form>
       </div>
     </div>
