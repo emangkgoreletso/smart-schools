@@ -2,13 +2,7 @@ import React from "react";
 import { Assignment } from "../../../Types/Assignments";
  
 type AssignmentStatus = "Pending" | "Submitted" | "Graded";
- 
-interface Assignment {
-  title: string;
-  subject: string;
-  dueDate: string;
-  status: AssignmentStatus;
-}
+
  
 interface Props {
   assignment: Assignment;
@@ -30,10 +24,7 @@ const AssignmentCard: React.FC<Props> = ({ assignment, onClick }) => {
           <h4 className="font-semibold text-gray-800">
             {assignment.title}
           </h4>
-          <p className="text-sm text-gray-500">
-            {assignment.subject}
-          </p>
-        </div>
+          </div>
  
         <span
           className={`text-xs px-3 py-1 rounded-full border ${statusStyles[assignment.status]}`}
