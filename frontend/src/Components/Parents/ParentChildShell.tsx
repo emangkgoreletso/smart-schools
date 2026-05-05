@@ -9,7 +9,7 @@ import ParentMessages from "./ParentMessages";
 import ParentMeetings from "./ParentMeetings";
 
 interface Props {
-  childId: string;
+  studentId: string;
   childName: string;
   className: string;
   onBack: () => void;
@@ -25,7 +25,7 @@ type Tab =
   | "Meetings";
 
 const ParentChildShell: React.FC<Props> = ({
-  childId,
+  studentId,
   childName,
   className,
   onBack,
@@ -88,31 +88,35 @@ const ParentChildShell: React.FC<Props> = ({
       <div className="bg-white p-6 rounded-lg shadow">
 
         {activeTab === "Overview" && (
-          <ParentOverview childId={childId} />
+          <ParentOverview
+  studentId={studentId}
+  studentName={childName}
+  className={className}
+/>
         )}
 
         {activeTab === "Attendance" && (
-          <ParentAttendance childId={childId} />
+          <ParentAttendance studentId={studentId} />
         )}
 
         {activeTab === "Performance" && (
-          <ParentPerformance childId={childId} />
+          <ParentPerformance studentId={studentId} />
         )}
 
         {activeTab === "Payments" && (
-          <ParentPayments childId={childId} />
+          <ParentPayments studentId={studentId} />
         )}
 
         {activeTab === "Announcements" && (
-          <ParentAnnouncements childId={childId} />
+          <ParentAnnouncements studentId={studentId} />
         )}
 
         {activeTab === "Messages" && (
-          <ParentMessages childId={childId} />
+          <ParentMessages studentId={studentId} />
         )}
 
         {activeTab === "Meetings" && (
-          <ParentMeetings childId={childId} />
+          <ParentMeetings studentId={studentId} />
         )}
 
       </div>

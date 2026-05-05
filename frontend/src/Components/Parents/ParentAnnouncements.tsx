@@ -1,10 +1,10 @@
 import React from "react";
 
 interface Props {
-  childId: string;
+  studentId: string;
 }
 
-const ParentAnnouncements: React.FC<Props> = ({ childId }) => {
+const ParentAnnouncements: React.FC<Props> = ({ studentId }) => {
 
   const announcements = [
     {
