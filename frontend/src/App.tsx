@@ -20,6 +20,8 @@ import NoticeBoard from "./Components/NoticeBoard";
 import { AuthProvider } from "./Auth/AuthProvider";
 import LoginPage from "./Pages/LoginPage";
 import Register from "./Pages/Register";
+import ParentPayments from "./Components/Parents/ParentPayments";
+import ParentPaymentPage from "./Pages/ParentPaymentPage";
 
 
 const App: React.FC = () => {
@@ -46,6 +48,8 @@ const App: React.FC = () => {
             <Route path="/teachers-portal" element={<TeachersPortal />} />
             <Route path="/parents-portal" element={<ParentsPortal />} />
             <Route path="/payments" element={<Payments />} />
+            <Route path="/parent/payments/:studentId" element={<ParentPaymentPage />}
+/>
             <Route path="/notice-board" element={<NoticeBoard />} />
           </Route>
         </Routes>
@@ -55,3 +59,7 @@ const App: React.FC = () => {
 };
 
 export default App;
+
+
+
+//
