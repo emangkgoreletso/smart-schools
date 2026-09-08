@@ -2,10 +2,8 @@ using SSS.Backend.Shared.Enums;
 
 namespace SSS.Backend.Application.DTOs;
 
-public class AssessmentDTO
+public class CreateAssessmentDTO
 {
-    public Guid Id { get; set; }
-
     public Guid SubjectId { get; set; }
 
     public Guid ClassId { get; set; }
@@ -19,6 +17,4 @@ public class AssessmentDTO
     public int TotalMarks { get; set; }
 
     public DateTime DueDate { get; set; }
-
-    public int Submissions { get; set; }
 }

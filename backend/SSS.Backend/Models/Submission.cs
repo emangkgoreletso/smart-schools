@@ -5,16 +5,17 @@ public class Submission
     public Guid Id { get; set; }
 
     public Guid AssessmentId { get; set; }
-    public Assessment Assessment { get; set; } = null!;
 
     public Guid StudentId { get; set; }
-    public Student Student { get; set; } = null!;
 
-    public string FileName { get; set; } = string.Empty;
+    public string FileUrl { get; set; } = string.Empty;
 
-    public DateTime SubmittedAt { get; set; }
+    public DateTime SubmittedAt { get; set; } = DateTime.UtcNow;
 
-    public double? Grade { get; set; }
+    public bool IsLate { get; set; }
 
-    public string? Feedback { get; set; }
+    // Navigation
+    public Assessment? Assessment { get; set; }
+
+    public Student? Student { get; set; }
 }

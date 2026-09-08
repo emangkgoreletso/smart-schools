@@ -12,16 +12,28 @@ public class Assessment
 
     public Guid TeacherId { get; set; }
 
-    public string Title { get; set; }
+    public string Title { get; set; } = string.Empty;
+
+    public string? Description { get; set; }
 
     public AssessmentType Type { get; set; }
 
     public int TotalMarks { get; set; }
 
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-    public DateTime DueDate { get; set; }   // ✅ ADD THIS (you need it)
+    public DateTime DueDate { get; set; }
 
-    // optional later
+    public bool IsPublished { get; set; } = false;
+
+    // Navigation
+    public Subject? Subject { get; set; }
+
+    public Class? Class { get; set; }
+
+    public Teacher? Teacher { get; set; }
+
+    public ICollection<Mark>? Marks { get; set; }
+
     public ICollection<Submission>? Submissions { get; set; }
 }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Source\\Repos\\smart-schools\\backend\\SSS.Backend\\SSS.Backend.csproj": {}
+    "C:\\Source\\Repos\\smart-schools\\backend\\SSS.backend\\SSS.Backend.csproj": {}
   },
   "projects": {
-    "C:\\Source\\Repos\\smart-schools\\backend\\SSS.Backend\\SSS.Backend.csproj": {
+    "C:\\Source\\Repos\\smart-schools\\backend\\SSS.backend\\SSS.Backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Source\\Repos\\smart-schools\\backend\\SSS.Backend\\SSS.Backend.csproj",
+        "projectUniqueName": "C:\\Source\\Repos\\smart-schools\\backend\\SSS.backend\\SSS.Backend.csproj",
         "projectName": "SSS.Backend",
-        "projectPath": "C:\\Source\\Repos\\smart-schools\\backend\\SSS.Backend\\SSS.Backend.csproj",
+        "projectPath": "C:\\Source\\Repos\\smart-schools\\backend\\SSS.backend\\SSS.Backend.csproj",
         "packagesPath": "C:\\Users\\EmangKgoreletso\\.nuget\\packages\\",
-        "outputPath": "C:\\Source\\Repos\\smart-schools\\backend\\SSS.Backend\\obj\\",
+        "outputPath": "C:\\Source\\Repos\\smart-schools\\backend\\SSS.backend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

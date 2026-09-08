@@ -1,13 +1,23 @@
-namespace SSS.Backend.Models
+namespace SSS.Backend.Models;
+
+public class AuditLog
 {
-    public class AuditLog
-    {
-        public Guid Id { get; set; }
+    public Guid Id { get; set; }
 
-        public Guid UserId { get; set; }
+    public Guid UserId { get; set; }
 
-        public string Action { get; set; }
+    public string Action { get; set; } = string.Empty;
 
-        public DateTime Timestamp { get; set; }
-    }
+    public string EntityName { get; set; } = string.Empty;
+
+    public Guid EntityId { get; set; }
+
+    public string? OldValues { get; set; }
+
+    public string? NewValues { get; set; }
+
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+    // Navigation
+    public User? User { get; set; }
 }

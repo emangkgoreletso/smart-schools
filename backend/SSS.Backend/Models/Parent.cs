@@ -1,15 +1,23 @@
-namespace SSS.Backend.Models
+namespace SSS.Backend.Models;
+
+public class Parent
 {
-    public class Parent
-    {
-        public Guid Id { get; set; }
+    public Guid Id { get; set; }
 
-        public Guid UserId { get; set; }
+    public Guid UserId { get; set; }
 
-        public Guid SchoolId { get; set; }
+    public string FirstName { get; set; } = string.Empty;
 
-        public string Phone { get; set; }
+    public string LastName { get; set; } = string.Empty;
 
-        public string Address { get; set; }
-    }
+    public string Email { get; set; } = string.Empty;
+
+    public string Phone { get; set; } = string.Empty;
+
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+    // Navigation
+    public User? User { get; set; }
+
+    public ICollection<StudentParent>? StudentParents { get; set; }
 }

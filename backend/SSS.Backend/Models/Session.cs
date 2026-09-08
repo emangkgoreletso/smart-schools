@@ -1,13 +1,21 @@
-namespace SSS.Backend.Models
+namespace SSS.Backend.Models;
+
+public class Session
 {
-    public class Session
-    {
-        public Guid Id { get; set; }
+    public Guid Id { get; set; }
 
-        public Guid UserId { get; set; }
+    public Guid UserId { get; set; }
 
-        public DateTime CreatedAt { get; set; }
+    public string IpAddress { get; set; } = string.Empty;
 
-        public DateTime ExpiresAt { get; set; }
-    }
+    public string Device { get; set; } = string.Empty;
+
+    public DateTime LoginTime { get; set; }
+
+    public DateTime? LogoutTime { get; set; }
+
+    public bool IsActive { get; set; }
+
+    // Navigation
+    public User? User { get; set; }
 }

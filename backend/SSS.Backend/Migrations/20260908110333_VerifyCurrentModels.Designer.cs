@@ -12,8 +12,8 @@ using SSS.Backend.Persistence.Context;
 namespace SSS.Backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260518133241_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260908110333_VerifyCurrentModels")]
+    partial class VerifyCurrentModels
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,6 +37,15 @@ namespace SSS.Backend.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("boolean");
+
                     b.Property<Guid>("SubjectId")
                         .HasColumnType("uuid");
 
@@ -48,6 +57,9 @@ namespace SSS.Backend.Migrations
                         .HasColumnType("text");
 
                     b.Property<int>("TotalMarks")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Type")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -73,9 +85,11 @@ namespace SSS.Backend.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
+                    b.Property<string>("Remarks")
                         .HasColumnType("text");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
 
                     b.Property<Guid>("StudentId")
                         .HasColumnType("uuid");
@@ -99,13 +113,28 @@ namespace SSS.Backend.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("Timestamp")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("EntityId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("EntityName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("NewValues")
+                        .HasColumnType("text");
+
+                    b.Property<string>("OldValues")
+                        .HasColumnType("text");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("AuditLogs");
                 });
@@ -116,11 +145,18 @@ namespace SSS.Backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<int>("AcademicYear")
+                        .HasColumnType("integer");
+
                     b.Property<Guid>("ClassTeacherId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("GradeLevel")
-                        .HasColumnType("integer");
+                    b.Property<string>("GradeLevel")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -170,8 +206,8 @@ namespace SSS.Backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("ClassId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("AcademicYear")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("EnrolledAt")
                         .HasColumnType("timestamp with time zone");
@@ -179,11 +215,18 @@ namespace SSS.Backend.Migrations
                     b.Property<Guid>("StudentId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("SubjectId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Term")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("ClassId");
-
                     b.HasIndex("StudentId");
+
+                    b.HasIndex("SubjectId");
 
                     b.ToTable("Enrollments");
                 });
@@ -194,9 +237,8 @@ namespace SSS.Backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("AcademicYear")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("AcademicYear")
+                        .HasColumnType("integer");
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("numeric");
@@ -204,16 +246,28 @@ namespace SSS.Backend.Migrations
                     b.Property<Guid>("ClassId")
                         .HasColumnType("uuid");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("FeeName")
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
                     b.Property<Guid>("SchoolId")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("Term")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ClassId");
+
+                    b.HasIndex("SchoolId");
 
                     b.ToTable("Fees");
                 });
@@ -228,7 +282,12 @@ namespace SSS.Backend.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("Grade")
-                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("MarkedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Remarks")
                         .HasColumnType("text");
 
                     b.Property<decimal>("Score")
@@ -252,9 +311,12 @@ namespace SSS.Backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Content")
+                    b.Property<string>("Body")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("boolean");
 
                     b.Property<Guid>("ReceiverId")
                         .HasColumnType("uuid");
@@ -265,7 +327,15 @@ namespace SSS.Backend.Migrations
                     b.Property<DateTime>("SentAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ReceiverId");
+
+                    b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
                 });
@@ -283,6 +353,12 @@ namespace SSS.Backend.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<Guid>("CreatedByUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("ExpiryDate")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasColumnType("text");
@@ -296,6 +372,10 @@ namespace SSS.Backend.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedByUserId");
+
+                    b.HasIndex("SchoolId");
+
                     b.ToTable("Notices");
                 });
 
@@ -305,7 +385,18 @@ namespace SSS.Backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Address")
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -313,15 +404,12 @@ namespace SSS.Backend.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("SchoolId")
-                        .HasColumnType("uuid");
-
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SchoolId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Parents");
                 });
@@ -342,18 +430,22 @@ namespace SSS.Backend.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Status")
+                    b.Property<string>("ReceiptNumber")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("StudentFeeId")
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("StudentId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("TransactionRef")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("StudentFeeId");
 
                     b.HasIndex("StudentId");
 
@@ -366,15 +458,22 @@ namespace SSS.Backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<Guid>("PaymentId")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("Provider")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ResponseMessage")
+                        .HasColumnType("text");
 
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<DateTime>("TransactionDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("TransactionReference")
                         .IsRequired()
@@ -393,8 +492,14 @@ namespace SSS.Backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("ExpiryDate")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsRevoked")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Token")
                         .IsRequired()
@@ -404,6 +509,8 @@ namespace SSS.Backend.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("RefreshTokens");
                 });
@@ -433,11 +540,17 @@ namespace SSS.Backend.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("LogoUrl")
                         .HasColumnType("text");
 
                     b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("SchoolName")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -452,16 +565,29 @@ namespace SSS.Backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<string>("Device")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("IpAddress")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("LoginTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("ExpiresAt")
+                    b.Property<DateTime?>("LogoutTime")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Sessions");
                 });
@@ -472,9 +598,22 @@ namespace SSS.Backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Position")
+                    b.Property<string>("Department")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<string>("EmployeeNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("HireDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("integer");
 
                     b.Property<Guid>("SchoolId")
                         .HasColumnType("uuid");
@@ -483,6 +622,10 @@ namespace SSS.Backend.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SchoolId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Staff");
                 });
@@ -499,12 +642,26 @@ namespace SSS.Backend.Migrations
                     b.Property<Guid>("ClassId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("SchoolId")
-                        .HasColumnType("uuid");
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Status")
+                    b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("SchoolId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("StudentNumber")
                         .IsRequired()
@@ -515,7 +672,11 @@ namespace SSS.Backend.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ClassId");
+
                     b.HasIndex("SchoolId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Students");
                 });
@@ -534,6 +695,9 @@ namespace SSS.Backend.Migrations
 
                     b.Property<decimal>("Balance")
                         .HasColumnType("numeric");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid>("FeeId")
                         .HasColumnType("uuid");
@@ -585,6 +749,12 @@ namespace SSS.Backend.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -592,6 +762,37 @@ namespace SSS.Backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Subjects");
+                });
+
+            modelBuilder.Entity("SSS.Backend.Models.Submission", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AssessmentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("FileUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsLate")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("SubmittedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssessmentId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("Submissions");
                 });
 
             modelBuilder.Entity("SSS.Backend.Models.Subscription", b =>
@@ -603,7 +804,13 @@ namespace SSS.Backend.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Plan")
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<decimal>("MonthlyAmount")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("PlanName")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -613,11 +820,9 @@ namespace SSS.Backend.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("SchoolId");
 
                     b.ToTable("Subscriptions");
                 });
@@ -628,15 +833,34 @@ namespace SSS.Backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("EmployeeNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("HireDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("SchoolId")
-                        .HasColumnType("uuid");
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
 
-                    b.Property<string>("Status")
+                    b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("SchoolId")
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
@@ -644,6 +868,8 @@ namespace SSS.Backend.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("SchoolId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Teachers");
                 });
@@ -676,13 +902,12 @@ namespace SSS.Backend.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("PhoneNumber")
+                    b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Role")
+                        .HasColumnType("integer");
 
                     b.Property<Guid>("SchoolId")
                         .HasColumnType("uuid");
@@ -696,197 +921,508 @@ namespace SSS.Backend.Migrations
 
             modelBuilder.Entity("SSS.Backend.Models.Assessment", b =>
                 {
-                    b.HasOne("SSS.Backend.Models.Class", null)
-                        .WithMany()
+                    b.HasOne("SSS.Backend.Models.Class", "Class")
+                        .WithMany("Assessments")
                         .HasForeignKey("ClassId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SSS.Backend.Models.Subject", null)
-                        .WithMany()
+                    b.HasOne("SSS.Backend.Models.Subject", "Subject")
+                        .WithMany("Assessments")
                         .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SSS.Backend.Models.Teacher", null)
-                        .WithMany()
+                    b.HasOne("SSS.Backend.Models.Teacher", "Teacher")
+                        .WithMany("Assessments")
                         .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Class");
+
+                    b.Navigation("Subject");
+
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("SSS.Backend.Models.Attendance", b =>
                 {
-                    b.HasOne("SSS.Backend.Models.Class", null)
-                        .WithMany()
+                    b.HasOne("SSS.Backend.Models.Class", "Class")
+                        .WithMany("AttendanceRecords")
                         .HasForeignKey("ClassId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SSS.Backend.Models.Student", null)
-                        .WithMany()
+                    b.HasOne("SSS.Backend.Models.Student", "Student")
+                        .WithMany("AttendanceRecords")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Class");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("SSS.Backend.Models.AuditLog", b =>
+                {
+                    b.HasOne("SSS.Backend.Models.User", "User")
+                        .WithMany("AuditLogs")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SSS.Backend.Models.Class", b =>
                 {
-                    b.HasOne("SSS.Backend.Models.Teacher", null)
-                        .WithMany()
+                    b.HasOne("SSS.Backend.Models.Teacher", "ClassTeacher")
+                        .WithMany("Classes")
                         .HasForeignKey("ClassTeacherId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("SSS.Backend.Models.School", null)
-                        .WithMany()
+                    b.HasOne("SSS.Backend.Models.School", "School")
+                        .WithMany("Classes")
                         .HasForeignKey("SchoolId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ClassTeacher");
+
+                    b.Navigation("School");
                 });
 
             modelBuilder.Entity("SSS.Backend.Models.ClassSubject", b =>
                 {
-                    b.HasOne("SSS.Backend.Models.Class", null)
-                        .WithMany()
+                    b.HasOne("SSS.Backend.Models.Class", "Class")
+                        .WithMany("ClassSubjects")
                         .HasForeignKey("ClassId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SSS.Backend.Models.Subject", null)
-                        .WithMany()
+                    b.HasOne("SSS.Backend.Models.Subject", "Subject")
+                        .WithMany("ClassSubjects")
                         .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SSS.Backend.Models.Teacher", null)
-                        .WithMany()
+                    b.HasOne("SSS.Backend.Models.Teacher", "Teacher")
+                        .WithMany("ClassSubjects")
                         .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Class");
+
+                    b.Navigation("Subject");
+
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("SSS.Backend.Models.Enrollment", b =>
                 {
-                    b.HasOne("SSS.Backend.Models.Class", null)
-                        .WithMany()
-                        .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SSS.Backend.Models.Student", null)
-                        .WithMany()
+                    b.HasOne("SSS.Backend.Models.Student", "Student")
+                        .WithMany("Enrollments")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("SSS.Backend.Models.Subject", "Subject")
+                        .WithMany("Enrollments")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student");
+
+                    b.Navigation("Subject");
                 });
 
             modelBuilder.Entity("SSS.Backend.Models.Fee", b =>
                 {
-                    b.HasOne("SSS.Backend.Models.Class", null)
-                        .WithMany()
+                    b.HasOne("SSS.Backend.Models.Class", "Class")
+                        .WithMany("Fees")
                         .HasForeignKey("ClassId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("SSS.Backend.Models.School", "School")
+                        .WithMany("Fees")
+                        .HasForeignKey("SchoolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Class");
+
+                    b.Navigation("School");
                 });
 
             modelBuilder.Entity("SSS.Backend.Models.Mark", b =>
                 {
-                    b.HasOne("SSS.Backend.Models.Assessment", null)
-                        .WithMany()
+                    b.HasOne("SSS.Backend.Models.Assessment", "Assessment")
+                        .WithMany("Marks")
                         .HasForeignKey("AssessmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SSS.Backend.Models.Student", null)
-                        .WithMany()
+                    b.HasOne("SSS.Backend.Models.Student", "Student")
+                        .WithMany("Marks")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Assessment");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("SSS.Backend.Models.Message", b =>
+                {
+                    b.HasOne("SSS.Backend.Models.User", "Receiver")
+                        .WithMany()
+                        .HasForeignKey("ReceiverId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SSS.Backend.Models.User", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Receiver");
+
+                    b.Navigation("Sender");
+                });
+
+            modelBuilder.Entity("SSS.Backend.Models.Notice", b =>
+                {
+                    b.HasOne("SSS.Backend.Models.User", "CreatedByUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedByUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SSS.Backend.Models.School", "School")
+                        .WithMany("Notices")
+                        .HasForeignKey("SchoolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CreatedByUser");
+
+                    b.Navigation("School");
                 });
 
             modelBuilder.Entity("SSS.Backend.Models.Parent", b =>
                 {
-                    b.HasOne("SSS.Backend.Models.School", null)
+                    b.HasOne("SSS.Backend.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("SchoolId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SSS.Backend.Models.Payment", b =>
                 {
-                    b.HasOne("SSS.Backend.Models.Student", null)
-                        .WithMany()
+                    b.HasOne("SSS.Backend.Models.StudentFee", "StudentFee")
+                        .WithMany("Payments")
+                        .HasForeignKey("StudentFeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SSS.Backend.Models.Student", "Student")
+                        .WithMany("Payments")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Student");
+
+                    b.Navigation("StudentFee");
                 });
 
             modelBuilder.Entity("SSS.Backend.Models.PaymentTransaction", b =>
                 {
-                    b.HasOne("SSS.Backend.Models.Payment", null)
-                        .WithMany()
+                    b.HasOne("SSS.Backend.Models.Payment", "Payment")
+                        .WithMany("Transactions")
                         .HasForeignKey("PaymentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Payment");
+                });
+
+            modelBuilder.Entity("SSS.Backend.Models.RefreshToken", b =>
+                {
+                    b.HasOne("SSS.Backend.Models.User", "User")
+                        .WithMany("RefreshTokens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SSS.Backend.Models.Session", b =>
+                {
+                    b.HasOne("SSS.Backend.Models.User", "User")
+                        .WithMany("Sessions")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SSS.Backend.Models.Staff", b =>
+                {
+                    b.HasOne("SSS.Backend.Models.School", "School")
+                        .WithMany("StaffMembers")
+                        .HasForeignKey("SchoolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SSS.Backend.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("School");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SSS.Backend.Models.Student", b =>
                 {
-                    b.HasOne("SSS.Backend.Models.School", null)
-                        .WithMany()
+                    b.HasOne("SSS.Backend.Models.Class", "Class")
+                        .WithMany("Students")
+                        .HasForeignKey("ClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SSS.Backend.Models.School", "School")
+                        .WithMany("Students")
                         .HasForeignKey("SchoolId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("SSS.Backend.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Class");
+
+                    b.Navigation("School");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SSS.Backend.Models.StudentFee", b =>
                 {
-                    b.HasOne("SSS.Backend.Models.Fee", null)
-                        .WithMany()
+                    b.HasOne("SSS.Backend.Models.Fee", "Fee")
+                        .WithMany("StudentFees")
                         .HasForeignKey("FeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SSS.Backend.Models.Student", null)
-                        .WithMany()
+                    b.HasOne("SSS.Backend.Models.Student", "Student")
+                        .WithMany("StudentFees")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Fee");
+
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("SSS.Backend.Models.StudentParent", b =>
                 {
-                    b.HasOne("SSS.Backend.Models.Parent", null)
-                        .WithMany()
+                    b.HasOne("SSS.Backend.Models.Parent", "Parent")
+                        .WithMany("StudentParents")
                         .HasForeignKey("ParentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SSS.Backend.Models.Student", null)
-                        .WithMany()
+                    b.HasOne("SSS.Backend.Models.Student", "Student")
+                        .WithMany("StudentParents")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Parent");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("SSS.Backend.Models.Submission", b =>
+                {
+                    b.HasOne("SSS.Backend.Models.Assessment", "Assessment")
+                        .WithMany("Submissions")
+                        .HasForeignKey("AssessmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SSS.Backend.Models.Student", "Student")
+                        .WithMany("Submissions")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Assessment");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("SSS.Backend.Models.Subscription", b =>
+                {
+                    b.HasOne("SSS.Backend.Models.School", "School")
+                        .WithMany()
+                        .HasForeignKey("SchoolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("School");
                 });
 
             modelBuilder.Entity("SSS.Backend.Models.Teacher", b =>
                 {
-                    b.HasOne("SSS.Backend.Models.School", null)
-                        .WithMany()
+                    b.HasOne("SSS.Backend.Models.School", "School")
+                        .WithMany("Teachers")
                         .HasForeignKey("SchoolId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("SSS.Backend.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("School");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SSS.Backend.Models.User", b =>
                 {
-                    b.HasOne("SSS.Backend.Models.School", null)
-                        .WithMany()
+                    b.HasOne("SSS.Backend.Models.School", "School")
+                        .WithMany("Users")
                         .HasForeignKey("SchoolId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("School");
+                });
+
+            modelBuilder.Entity("SSS.Backend.Models.Assessment", b =>
+                {
+                    b.Navigation("Marks");
+
+                    b.Navigation("Submissions");
+                });
+
+            modelBuilder.Entity("SSS.Backend.Models.Class", b =>
+                {
+                    b.Navigation("Assessments");
+
+                    b.Navigation("AttendanceRecords");
+
+                    b.Navigation("ClassSubjects");
+
+                    b.Navigation("Fees");
+
+                    b.Navigation("Students");
+                });
+
+            modelBuilder.Entity("SSS.Backend.Models.Fee", b =>
+                {
+                    b.Navigation("StudentFees");
+                });
+
+            modelBuilder.Entity("SSS.Backend.Models.Parent", b =>
+                {
+                    b.Navigation("StudentParents");
+                });
+
+            modelBuilder.Entity("SSS.Backend.Models.Payment", b =>
+                {
+                    b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("SSS.Backend.Models.School", b =>
+                {
+                    b.Navigation("Classes");
+
+                    b.Navigation("Fees");
+
+                    b.Navigation("Notices");
+
+                    b.Navigation("StaffMembers");
+
+                    b.Navigation("Students");
+
+                    b.Navigation("Teachers");
+
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("SSS.Backend.Models.Student", b =>
+                {
+                    b.Navigation("AttendanceRecords");
+
+                    b.Navigation("Enrollments");
+
+                    b.Navigation("Marks");
+
+                    b.Navigation("Payments");
+
+                    b.Navigation("StudentFees");
+
+                    b.Navigation("StudentParents");
+
+                    b.Navigation("Submissions");
+                });
+
+            modelBuilder.Entity("SSS.Backend.Models.StudentFee", b =>
+                {
+                    b.Navigation("Payments");
+                });
+
+            modelBuilder.Entity("SSS.Backend.Models.Subject", b =>
+                {
+                    b.Navigation("Assessments");
+
+                    b.Navigation("ClassSubjects");
+
+                    b.Navigation("Enrollments");
+                });
+
+            modelBuilder.Entity("SSS.Backend.Models.Teacher", b =>
+                {
+                    b.Navigation("Assessments");
+
+                    b.Navigation("ClassSubjects");
+
+                    b.Navigation("Classes");
+                });
+
+            modelBuilder.Entity("SSS.Backend.Models.User", b =>
+                {
+                    b.Navigation("AuditLogs");
+
+                    b.Navigation("RefreshTokens");
+
+                    b.Navigation("Sessions");
                 });
 #pragma warning restore 612, 618
         }

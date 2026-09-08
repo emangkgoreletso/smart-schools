@@ -1,5 +1,8 @@
 using SSS.Backend.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
+using SSS.Backend.Application.Interfaces;
+using SSS.Backend.Application.Services;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,7 +36,11 @@ builder.Services.AddCors(options =>
 // =========================
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
-);
+    );
+    builder.Services.AddScoped<IStudentService, StudentService>();
+    builder.Services.AddScoped<IAuthService, AuthService>();
+    builder.Services.AddScoped<IPaymentService, PaymentService>();
+    builder.Services.AddScoped<ITeacherService, TeacherService>();
 
 var app = builder.Build();
 
